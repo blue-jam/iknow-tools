@@ -3,6 +3,7 @@ package main
 import (
 	"database/sql"
 	"fmt"
+	"log"
 	"net/http"
 	"os"
 	"strconv"
@@ -128,5 +129,8 @@ func main() {
 	app.Name = "iknow-tools"
 	app.Usage = "A CLI tool for managing iKnow! statistics"
 	app.Version = "0.1.0"
-	_ = app.Run(os.Args)
+	err := app.Run(os.Args)
+	if err != nil {
+		log.Fatal(err)
+	}
 }
