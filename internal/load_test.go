@@ -1,4 +1,4 @@
-package main
+package internal
 
 import (
 	"net/http"
@@ -9,7 +9,7 @@ import (
 
 func TestFetchEntry(t *testing.T) {
 	ts := httptest.NewServer(http.HandlerFunc(func(w http.ResponseWriter, r *http.Request) {
-		http.ServeFile(w, r, "data/mock_iknow.html")
+		http.ServeFile(w, r, "../test/data/mock_iknow.html")
 	}))
 	defer ts.Close()
 
