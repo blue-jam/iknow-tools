@@ -29,3 +29,5 @@ go.work.sum
 *.sqlite3
 
 /iknow-tools
+
+*.png

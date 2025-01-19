@@ -24,6 +24,12 @@ func main() {
 			Args:   true,
 			Action: internal.CmdDiff,
 		},
+		{
+			Name:   "plot",
+			Usage:  "Show the graph of the statistics",
+			Args:   true,
+			Action: internal.CmdPlot,
+		},
 	}
 	app.Name = "iknow-tools"
 	app.Usage = "A CLI tool for managing iKnow! statistics"
