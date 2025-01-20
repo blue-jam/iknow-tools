@@ -17,6 +17,9 @@ func main() {
 			Usage:  "Load the statistics from the specified URL",
 			Args:   true,
 			Action: internal.CmdLoad,
+			Flags: []cli.Flag{
+				internal.BaseURLFlag,
+			},
 		},
 		{
 			Name:   "diff",
@@ -31,9 +34,11 @@ func main() {
 			Action: internal.CmdPlot,
 		},
 	}
+	app.Flags = internal.Flags
 	app.Name = "iknow-tools"
 	app.Usage = "A CLI tool for managing iKnow! statistics"
 	app.Version = "0.1.0"
+	app.Before = internal.OpenDBFromContext
 	err := app.Run(os.Args)
 	if err != nil {
 		log.Fatal(err)

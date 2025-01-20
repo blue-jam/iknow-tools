@@ -16,13 +16,10 @@ func CmdPlot(ctx *cli.Context) error {
 		return cli.Exit("Please specify the start and end dates", 1)
 	}
 
-	db, err := openDB(DefaultDBName)
-	if err != nil {
-		return err
-	}
+	db := GetDBFromContext(ctx)
 
 	var entries []Entry
-	err = db.Select(&entries, "SELECT * FROM entries WHERE date BETWEEN ? AND ? ORDER BY date ASC", startDateStr, endDateStr)
+	err := db.Select(&entries, "SELECT * FROM entries WHERE date BETWEEN ? AND ? ORDER BY date ASC", startDateStr, endDateStr)
 
 	p := plot.New()
 

@@ -13,5 +13,10 @@ func createTestDB() *sqlx.DB {
 		log.Fatalf("failed to connect to the database: %v", err)
 	}
 
+	err = initDB(db)
+	if err != nil {
+		log.Fatalf("failed to initialize the database: %v", err)
+	}
+
 	return db
 }

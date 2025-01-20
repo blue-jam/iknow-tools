@@ -70,7 +70,8 @@ func CmdLoad(ctx *cli.Context) error {
 	if uID == "" {
 		return cli.Exit("Please specify the user ID", 1)
 	}
-	url := "https://iknow.jp/users/" + uID
+	baseURL := ctx.String(BaseURLFlag.Name)
+	url := baseURL + "/users/" + uID
 	entry, err := fetchEntry(url)
 	if err != nil {
 		return err
@@ -79,16 +80,8 @@ func CmdLoad(ctx *cli.Context) error {
 	// Extract date from system time
 	entry.Date = time.Now().Format("2006-01-02")
 
-	db, err := openDB(DefaultDBName)
-	if err != nil {
-		return fmt.Errorf("failed to open the database: %w", err)
-	}
-	defer db.Close()
+	db := GetDBFromContext(ctx)
 
-	err = initDB(db)
-	if err != nil {
-		return err
-	}
 	_, err = db.Exec(
 		`INSERT OR REPLACE INTO entries (date, started_items, completed_items, completed_courses, study_time) VALUES (?, ?, ?, ?, ?)`,
 		entry.Date, entry.StartedItems, entry.CompletedItems, entry.CompletedCourses, entry.StudyTime,

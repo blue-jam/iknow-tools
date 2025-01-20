@@ -16,10 +16,7 @@ func CmdDiff(ctx *cli.Context) error {
 		return cli.Exit("Please specify the begin and end dates", 1)
 	}
 
-	db, err := sqlx.Open("sqlite3", DefaultDBName)
-	if err != nil {
-		return fmt.Errorf("failed to open the database: %w", err)
-	}
+	db := GetDBFromContext(ctx)
 
 	beginEntry, endEntry, err := fetchDiffData(db, beginDateStr, endDateStr)
 	if err != nil {
