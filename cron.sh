@@ -14,8 +14,8 @@ last_day_of_this_month=$(date -d "$(date +%Y-%m-01) +1 month -1 day" +%Y-%m-%d)
 this_year=$(date +%Y)
 this_month=$(date +%Y-%m)
 
-./iknow-tools plot "$last_day_of_last_year" "$last_day_of_this_month"
+./iknow-tools plot -predict-completed "$last_day_of_last_year" "$last_day_of_this_month"
 mv plot.png "images/${this_year}.png"
 
-./iknow-tools plot "$last_day_of_last_month" "$last_day_of_this_month"
+./iknow-tools plot -predict-completed "$last_day_of_last_month" "$last_day_of_this_month"
 mv plot.png "images/${this_month}.png"
