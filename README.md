@@ -9,5 +9,5 @@ crontab -e
 And add the following line to the crontab file:
 
 ```
-0 0 * * * <path-to-iknow-tools>/cron.sh <user-id>
+59 * * * * <path-to-iknow-tools>/cron.sh <user-id>
 ```
