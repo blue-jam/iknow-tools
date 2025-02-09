@@ -17,3 +17,8 @@ var BaseURLFlag = &cli.StringFlag{
 	Value: "https://iknow.jp",
 	Usage: "The base URL of the iKnow! website",
 }
+
+var PredictCompletedFlag = &cli.BoolFlag{
+	Name:  "predict-completed",
+	Usage: "Draw the predicted number of completed items",
+}

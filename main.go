@@ -32,6 +32,9 @@ func main() {
 			Usage:  "Show the graph of the statistics",
 			Args:   true,
 			Action: internal.CmdPlot,
+			Flags: []cli.Flag{
+				internal.PredictCompletedFlag,
+			},
 		},
 	}
 	app.Flags = internal.Flags

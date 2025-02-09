@@ -1,6 +1,7 @@
 package internal
 
 import (
+	"gonum.org/v1/plot/vg"
 	"time"
 
 	"github.com/urfave/cli/v2"
@@ -24,6 +25,7 @@ func CmdPlot(ctx *cli.Context) error {
 	p := plot.New()
 
 	p.X.Label.Text = "Date"
+	p.Y.Label.Text = "Items"
 
 	startedItems := make(plotter.XYs, len(entries))
 	completedItems := make(plotter.XYs, len(entries))
@@ -56,6 +58,41 @@ func CmdPlot(ctx *cli.Context) error {
 	c.LineStyle.Color = plotutil.Color(1)
 
 	p.Add(s, c)
+
+	predictCompleted := ctx.Bool(PredictCompletedFlag.Name)
+	if predictCompleted {
+		startedTime, err := time.Parse("2006-01-02", entries[0].Date)
+		if err != nil {
+			return err
+		}
+		dataEndTime, err := time.Parse("2006-01-02", entries[len(entries)-1].Date)
+		if err != nil {
+			return err
+		}
+		rangeEndTime, err := time.Parse("2006-01-02", endDateStr)
+		if err != nil {
+			return err
+		}
+
+		completedItemsDiff := completedItems[len(completedItems)-1].Y - completedItems[0].Y
+		totalDays := dataEndTime.Sub(startedTime).Hours() / 24
+		rangeDays := rangeEndTime.Sub(startedTime).Hours() / 24
+
+		predictedItems := make(plotter.XYs, 2)
+		predictedItems[0].X = completedItems[0].X
+		predictedItems[0].Y = completedItems[0].Y
+		predictedItems[1].X = float64(rangeEndTime.Unix())
+		predictedItems[1].Y = completedItemsDiff / totalDays * rangeDays
+		pl, err := plotter.NewLine(predictedItems)
+		if err != nil {
+			return err
+		}
+		pl.LineStyle.Width = 2
+		pl.LineStyle.Dashes = []vg.Length{vg.Points(5), vg.Points(5)}
+		pl.LineStyle.Color = plotutil.Color(2)
+
+		p.Add(pl)
+	}
 
 	p.X.Tick.Marker = plot.TimeTicks{Format: "2006-01-02"}
 
