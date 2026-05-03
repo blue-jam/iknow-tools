@@ -15,8 +15,13 @@ last_day_of_this_month=$(date -d "$(date +%Y-%m-01) +1 month -1 day" +%Y-%m-%d)
 this_year=$(date +%Y)
 this_month=$(date +%Y-%m)
 
+mkdir -p "images/${this_year}"
+
 ./iknow-tools plot -predict-completed "$last_day_of_last_year" "$last_day_of_this_year"
-mv plot.png "images/${this_year}.png"
+mv plot.png "images/${this_year}/${this_year}.png"
 
 ./iknow-tools plot -predict-completed "$last_day_of_last_month" "$last_day_of_this_month"
-mv plot.png "images/${this_month}.png"
+mv plot.png "images/${this_year}/${this_month}.png"
+
+./iknow-tools diff "$last_day_of_last_year" "$last_day_of_this_year" > "images/${this_year}/${this_year}.txt"
+./iknow-tools diff "$last_day_of_last_month" "$last_day_of_this_month" > "images/${this_year}/${this_month}.txt"
