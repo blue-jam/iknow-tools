@@ -23,5 +23,5 @@ mv plot.png "images/${this_year}/${this_year}.png"
 ./iknow-tools plot -predict-completed "$last_day_of_last_month" "$last_day_of_this_month"
 mv plot.png "images/${this_year}/${this_month}.png"
 
-./iknow-tools diff --markdown "$last_day_of_last_year" "$last_day_of_this_year" > "images/${this_year}/${this_year}.txt"
-./iknow-tools diff --markdown "$last_day_of_last_month" "$last_day_of_this_month" > "images/${this_year}/${this_month}.txt"
+./iknow-tools diff --markdown "$last_day_of_last_year" "$last_day_of_this_year" > "images/${this_year}/${this_year}.md"
+./iknow-tools diff --markdown "$last_day_of_last_month" "$last_day_of_this_month" > "images/${this_year}/${this_month}.md"
