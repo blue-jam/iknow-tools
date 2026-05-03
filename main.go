@@ -26,6 +26,9 @@ func main() {
 			Usage:  "Show the difference between the statistics of the specified dates",
 			Args:   true,
 			Action: internal.CmdDiff,
+			Flags: []cli.Flag{
+				internal.MarkdownFlag,
+			},
 		},
 		{
 			Name:   "plot",

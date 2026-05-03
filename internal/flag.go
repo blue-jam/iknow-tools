@@ -22,3 +22,8 @@ var PredictCompletedFlag = &cli.BoolFlag{
 	Name:  "predict-completed",
 	Usage: "Draw the predicted number of completed items",
 }
+
+var MarkdownFlag = &cli.BoolFlag{
+	Name:  "markdown",
+	Usage: "Output diff in markdown format",
+}

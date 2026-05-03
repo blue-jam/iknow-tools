@@ -23,14 +23,24 @@ func CmdDiff(ctx *cli.Context) error {
 		return err
 	}
 
-	w := tabwriter.NewWriter(os.Stdout, 0, 0, 4, ' ', 0)
-	fmt.Fprintln(w, "Metric\tBegin Date\tEnd Date\tDifference")
-	fmt.Fprintf(w, "Date\t%s\t%s\t\n", beginEntry.Date, endEntry.Date)
-	fmt.Fprintf(w, "Started Items\t%d\t%d\t%+d\n", beginEntry.StartedItems, endEntry.StartedItems, endEntry.StartedItems-beginEntry.StartedItems)
-	fmt.Fprintf(w, "Completed Items\t%d\t%d\t%+d\n", beginEntry.CompletedItems, endEntry.CompletedItems, endEntry.CompletedItems-beginEntry.CompletedItems)
-	fmt.Fprintf(w, "Completed Courses\t%d\t%d\t%+d\n", beginEntry.CompletedCourses, endEntry.CompletedCourses, endEntry.CompletedCourses-beginEntry.CompletedCourses)
-	fmt.Fprintf(w, "Study Time\t%d\t%d\t%+d\n", beginEntry.StudyTime, endEntry.StudyTime, endEntry.StudyTime-beginEntry.StudyTime)
-	w.Flush()
+	if ctx.Bool("markdown") {
+		fmt.Println("| Metric            | Begin Date   | End Date     | Difference |")
+		fmt.Println("|-------------------|--------------|--------------|------------|")
+		fmt.Printf("| %-17s | %12s | %12s | %10s |\n", "Date", beginEntry.Date, endEntry.Date, "")
+		fmt.Printf("| %-17s | %12d | %12d | %+10d |\n", "Started Items", beginEntry.StartedItems, endEntry.StartedItems, endEntry.StartedItems-beginEntry.StartedItems)
+		fmt.Printf("| %-17s | %12d | %12d | %+10d |\n", "Completed Items", beginEntry.CompletedItems, endEntry.CompletedItems, endEntry.CompletedItems-beginEntry.CompletedItems)
+		fmt.Printf("| %-17s | %12d | %12d | %+10d |\n", "Completed Courses", beginEntry.CompletedCourses, endEntry.CompletedCourses, endEntry.CompletedCourses-beginEntry.CompletedCourses)
+		fmt.Printf("| %-17s | %12d | %12d | %+10d |\n", "Study Time", beginEntry.StudyTime, endEntry.StudyTime, endEntry.StudyTime-beginEntry.StudyTime)
+	} else {
+		w := tabwriter.NewWriter(os.Stdout, 0, 0, 4, ' ', 0)
+		fmt.Fprintln(w, "Metric\tBegin Date\tEnd Date\tDifference")
+		fmt.Fprintf(w, "Date\t%s\t%s\t\n", beginEntry.Date, endEntry.Date)
+		fmt.Fprintf(w, "Started Items\t%d\t%d\t%+d\n", beginEntry.StartedItems, endEntry.StartedItems, endEntry.StartedItems-beginEntry.StartedItems)
+		fmt.Fprintf(w, "Completed Items\t%d\t%d\t%+d\n", beginEntry.CompletedItems, endEntry.CompletedItems, endEntry.CompletedItems-beginEntry.CompletedItems)
+		fmt.Fprintf(w, "Completed Courses\t%d\t%d\t%+d\n", beginEntry.CompletedCourses, endEntry.CompletedCourses, endEntry.CompletedCourses-beginEntry.CompletedCourses)
+		fmt.Fprintf(w, "Study Time\t%d\t%d\t%+d\n", beginEntry.StudyTime, endEntry.StudyTime, endEntry.StudyTime-beginEntry.StudyTime)
+		w.Flush()
+	}
 
 	return nil
 }
