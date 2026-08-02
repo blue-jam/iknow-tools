@@ -1,0 +1,9 @@
+.git
+.github
+.idea
+.env
+iknow-tools
+iknow.sqlite3
+plot.png
+images
+*.test

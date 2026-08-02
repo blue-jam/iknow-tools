@@ -32,3 +32,4 @@ go.work.sum
 
 *.png
 image/
+/images/

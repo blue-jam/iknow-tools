@@ -1,0 +1,24 @@
+services:
+  collector:
+    image: ${IKNOW_IMAGE:-ghcr.io/blue-jam/iknow-tools:latest}
+    pull_policy: always
+    environment:
+      IKNOW_USER_ID: ${IKNOW_USER_ID:?Set IKNOW_USER_ID in .env}
+      IKNOW_DATA_DIR: /data
+    volumes:
+      - iknow-data:/data
+    restart: unless-stopped
+
+  nginx:
+    image: nginx:1.27-alpine
+    depends_on:
+      - collector
+    ports:
+      - "${HTTP_PORT:-8080}:80"
+    volumes:
+      - iknow-data:/data:ro
+      - ./docker/nginx.conf:/etc/nginx/conf.d/default.conf:ro
+    restart: unless-stopped
+
+volumes:
+  iknow-data:
