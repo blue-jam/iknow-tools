@@ -21,6 +21,7 @@ iKnow! の学習統計を定期的に取得し、グラフと差分レポート�
 3. `http://localhost:8080/` を開きます。
 
 収集処理は従来のcrontab設定と同じく毎時59分に `cron.sh` を実行します。SQLiteデータベースと公開ファイルは `iknow-data` Docker volumeに保存され、nginxから読み取り専用で公開されます。
+collectorはrootではなく、専用ユーザー（UID/GID 10001）で実行されます。
 
 実行ログは次のコマンドで確認できます。
 

@@ -2,6 +2,7 @@ services:
   collector:
     image: ${IKNOW_IMAGE:-ghcr.io/blue-jam/iknow-tools:latest}
     pull_policy: always
+    user: "10001:10001"
     environment:
       IKNOW_USER_ID: ${IKNOW_USER_ID:?Set IKNOW_USER_ID in .env}
       IKNOW_DATA_DIR: /data
