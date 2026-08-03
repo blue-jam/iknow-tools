@@ -10,7 +10,7 @@ RUN CGO_ENABLED=1 go build -o /out/iknow-tools .
 
 FROM alpine:3.21
 
-RUN apk add --no-cache ca-certificates coreutils
+RUN apk add --no-cache ca-certificates coreutils tzdata
 
 RUN addgroup -S -g 10001 iknow \
     && adduser -S -D -H -u 10001 -G iknow iknow \
