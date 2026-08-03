@@ -6,6 +6,7 @@ services:
     environment:
       IKNOW_USER_ID: ${IKNOW_USER_ID:?Set IKNOW_USER_ID in .env}
       IKNOW_DATA_DIR: /data
+      TZ: Asia/Tokyo
     volumes:
       - iknow-data:/data
     restart: unless-stopped
